@@ -476,6 +476,7 @@ GameObject:
   - component: {fileID: 2066323597}
   - component: {fileID: 2066323599}
   - component: {fileID: 2066323598}
+  - component: {fileID: 2066323600}
   m_Layer: 0
   m_Name: baseTilemap
   m_TagString: Untagged
@@ -4665,15 +4666,6 @@ Tilemap:
       m_ObjectToInstantiate: {fileID: 0}
       m_TileFlags: 1
       m_ColliderType: 1
-  - first: {x: -2, y: 14, z: 0}
-    second:
-      m_TileIndex: 3
-      m_TileSpriteIndex: 3
-      m_TileMatrixIndex: 1
-      m_TileColorIndex: 0
-      m_ObjectToInstantiate: {fileID: 0}
-      m_TileFlags: 1
-      m_ColliderType: 1
   - first: {x: 0, y: 16, z: 0}
     second:
       m_TileIndex: 14
@@ -4691,8 +4683,8 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 1
-    m_Data: {fileID: 11400000, guid: ab8f372c6ecce5b4ebec5714b2cc7e4e, type: 2}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 7
     m_Data: {fileID: 11400000, guid: ae28f5abda32a674499b399d7a787d2a, type: 2}
   - m_RefCount: 31
@@ -4728,9 +4720,8 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 1
-    m_Data: {fileID: 6666109543723517089, guid: 7f1a0a3d996d9ca4c9873db652d00036,
-      type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 7
     m_Data: {fileID: 2008196661996826566, guid: 7f1a0a3d996d9ca4c9873db652d00036,
       type: 3}
@@ -4792,7 +4783,7 @@ Tilemap:
       e31: 2e-44
       e32: 4.5904e-41
       e33: 0
-  - m_RefCount: 459
+  - m_RefCount: 458
     m_Data:
       e00: 0.8
       e01: 0
@@ -4811,7 +4802,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 459
+  - m_RefCount: 458
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4836,3 +4827,15 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &2066323600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2066323596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 205d459107e9e564ab6cb99693ec9d03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
