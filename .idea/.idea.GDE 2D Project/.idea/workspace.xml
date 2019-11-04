@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="983d264e-e1c1-47cb-81b5-9e63aa5001b9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.GDE 2D Project/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GDE 2D Project/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GDE 2D Project/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GDE 2D Project/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/TileRotation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TileRotation.cs" afterDir="false" />
     </list>
@@ -32,6 +31,7 @@
     <property name="Discover.Launch.Via.Unity" value="true" />
     <property name="Rider.DefaultBreakpoints.AreToggled" value="true" />
     <property name="Rider.ProjectViewActivator.IsNotFirstRun" value="true" />
+    <property name="TODO_SCOPE" value="All Places" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
@@ -75,7 +75,8 @@
       <updated>1572794175167</updated>
       <workItem from="1572794176642" duration="736000" />
       <workItem from="1572803699050" duration="138000" />
-      <workItem from="1572839218485" duration="1738000" />
+      <workItem from="1572839218485" duration="3024000" />
+      <workItem from="1572880801281" duration="997000" />
     </task>
     <servers />
   </component>
