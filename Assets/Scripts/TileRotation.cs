@@ -41,79 +41,38 @@ public class TileRotation : MonoBehaviour
             Vector3Int cellPosition = _gridLayout.WorldToCell(pz);
             //Debug.Log(cellPosition);
             //Debug.Log(_tilemap.GetTile(cellPosition));
-            // I Rotation
-            if (_tilemap.GetTile(cellPosition).name.Equals("landscapeTiles_064.png"))
-            {
-                Tile tile = ScriptableObject.CreateInstance<Tile>();
-                tile.sprite = _landscapeTiles[72];
-                tile.name = "landscapeTiles_072.png";
-                _tilemap.SetTile(cellPosition, tile);
-            }
-            else if (_tilemap.GetTile(cellPosition).name.Equals("landscapeTiles_072.png"))
-            {
-                Tile tile = ScriptableObject.CreateInstance<Tile>();
-                tile.sprite = _landscapeTiles[64];
-                tile.name = "landscapeTiles_064.png";
-                _tilemap.SetTile(cellPosition, tile);
-            }
+
+            int tileNoToRotate = -1;
+            if (_tilemap.GetTile(cellPosition))
+                tileNoToRotate = Int32.Parse(_tilemap.GetTile(cellPosition).name.Substring(15, 3));
             
+            // I Rotation
+            if (_iTiles.Contains(tileNoToRotate))
+            {
+                int indexOfRotatedTile = (Array.IndexOf(_iTiles, tileNoToRotate) + 1) % 2;
+                Tile tile = ScriptableObject.CreateInstance<Tile>();
+                tile.sprite = _landscapeTiles[_iTiles[indexOfRotatedTile]];
+                tile.name = "landscapeTiles_" + String.Format("{0:000}", _iTiles[indexOfRotatedTile]) + ".png";
+                _tilemap.SetTile(cellPosition, tile);
+            }
+
             // L Rotation
-            else if (_tilemap.GetTile(cellPosition).name.Equals("landscapeTiles_079.png"))
+            else if (_lTiles.Contains(tileNoToRotate))
             {
+                int indexOfRotatedTile = (Array.IndexOf(_lTiles, tileNoToRotate) + 1) % 4;
                 Tile tile = ScriptableObject.CreateInstance<Tile>();
-                tile.sprite = _landscapeTiles[86];
-                tile.name = "landscapeTiles_086.png";
-                _tilemap.SetTile(cellPosition, tile);
-            }
-            else if (_tilemap.GetTile(cellPosition).name.Equals("landscapeTiles_086.png"))
-            {
-                Tile tile = ScriptableObject.CreateInstance<Tile>();
-                tile.sprite = _landscapeTiles[78];
-                tile.name = "landscapeTiles_078.png";
-                _tilemap.SetTile(cellPosition, tile);
-            }
-            else if (_tilemap.GetTile(cellPosition).name.Equals("landscapeTiles_078.png"))
-            {
-                Tile tile = ScriptableObject.CreateInstance<Tile>();
-                tile.sprite = _landscapeTiles[71];
-                tile.name = "landscapeTiles_071.png";
-                _tilemap.SetTile(cellPosition, tile);
-            }
-            else if (_tilemap.GetTile(cellPosition).name.Equals("landscapeTiles_071.png"))
-            {
-                Tile tile = ScriptableObject.CreateInstance<Tile>();
-                tile.sprite = _landscapeTiles[79];
-                tile.name = "landscapeTiles_079.png";
+                tile.sprite = _landscapeTiles[_lTiles[indexOfRotatedTile]];
+                tile.name = "landscapeTiles_" + String.Format("{0:000}", _lTiles[indexOfRotatedTile]) + ".png";
                 _tilemap.SetTile(cellPosition, tile);
             }
             
             // T Rotation
-            else if (_tilemap.GetTile(cellPosition).name.Equals("landscapeTiles_129.png"))
+            else if (_tTiles.Contains(tileNoToRotate))
             {
+                int indexOfRotatedTile = (Array.IndexOf(_tTiles, tileNoToRotate) + 1) % 4;
                 Tile tile = ScriptableObject.CreateInstance<Tile>();
-                tile.sprite = _landscapeTiles[130];
-                tile.name = "landscapeTiles_130.png";
-                _tilemap.SetTile(cellPosition, tile);
-            }
-            else if (_tilemap.GetTile(cellPosition).name.Equals("landscapeTiles_130.png"))
-            {
-                Tile tile = ScriptableObject.CreateInstance<Tile>();
-                tile.sprite = _landscapeTiles[131];
-                tile.name = "landscapeTiles_131.png";
-                _tilemap.SetTile(cellPosition, tile);
-            }
-            else if (_tilemap.GetTile(cellPosition).name.Equals("landscapeTiles_131.png"))
-            {
-                Tile tile = ScriptableObject.CreateInstance<Tile>();
-                tile.sprite = _landscapeTiles[132];
-                tile.name = "landscapeTiles_132.png";
-                _tilemap.SetTile(cellPosition, tile);
-            }
-            else if (_tilemap.GetTile(cellPosition).name.Equals("landscapeTiles_132.png"))
-            {
-                Tile tile = ScriptableObject.CreateInstance<Tile>();
-                tile.sprite = _landscapeTiles[129];
-                tile.name = "landscapeTiles_129.png";
+                tile.sprite = _landscapeTiles[_tTiles[indexOfRotatedTile]];
+                tile.name = "landscapeTiles_" + String.Format("{0:000}", _tTiles[indexOfRotatedTile]) + ".png";
                 _tilemap.SetTile(cellPosition, tile);
             }
         }
