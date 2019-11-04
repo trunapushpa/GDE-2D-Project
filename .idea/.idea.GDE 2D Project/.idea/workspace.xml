@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="983d264e-e1c1-47cb-81b5-9e63aa5001b9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GDE 2D Project/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GDE 2D Project/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TileRotation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TileRotation.cs" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,6 +16,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/../2D Project/Assets/Scripts/ObjectClicker.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TileRotation.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
@@ -33,7 +33,7 @@
     <property name="Rider.ProjectViewActivator.IsNotFirstRun" value="true" />
     <property name="TODO_SCOPE" value="All Places" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="settings.editor.selected.configurable" value="settings.github" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -76,8 +76,16 @@
       <workItem from="1572794176642" duration="736000" />
       <workItem from="1572803699050" duration="138000" />
       <workItem from="1572839218485" duration="3024000" />
-      <workItem from="1572880801281" duration="997000" />
+      <workItem from="1572880801281" duration="1320000" />
     </task>
+    <task id="LOCAL-00001" summary="Drag and Drop Feature Added">
+      <created>1572881968537</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1572881968537</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -100,6 +108,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="LOCAL_CHANGES_DETAILS_PREVIEW_SHOWN" value="true" />
+    <MESSAGE value="Drag and Drop Feature Added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Drag and Drop Feature Added" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
