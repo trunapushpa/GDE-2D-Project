@@ -127,4 +127,9 @@
 	<SubTexture name="landscapeTiles_125.png" x="397" y="1266" width="132" height="99"/>
 	<SubTexture name="landscapeTiles_126.png" x="397" y="1365" width="132" height="99"/>
 	<SubTexture name="landscapeTiles_127.png" x="265" y="1140" width="132" height="98"/>
+	<SubTexture name="landscapeTiles_128.png" x="797" y="0" width="132" height="99"/>
+	<SubTexture name="landscapeTiles_129.png" x="797" y="99" width="132" height="99"/>
+	<SubTexture name="landscapeTiles_130.png" x="797" y="198" width="132" height="99"/>
+	<SubTexture name="landscapeTiles_131.png" x="797" y="297" width="132" height="99"/>
+	<SubTexture name="landscapeTiles_132.png" x="797" y="396" width="132" height="99"/>
 </TextureAtlas>
