@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CarbonMeter : MonoBehaviour
 {
-    public float progress = 0;
+    public static float progress = 0;
     public Vector2 position = new Vector2(Screen.width/2 + 100, Screen.height/2 - Screen.width/2 - 200);
     public Vector2 size = new Vector2(400, 50);
     public Texture2D emptyImage;
@@ -34,8 +34,13 @@ public class CarbonMeter : MonoBehaviour
     IEnumerator delay()
     {
         check = true;
-        progress = progress + diff;
+        if(!isFull())
+            progress = progress + diff;
         yield return new WaitForSeconds(speed);
         check = false;
+    }
+
+    public static bool isFull() {
+        return progress > 0.10f;
     }
 }
