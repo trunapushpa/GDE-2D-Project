@@ -41,6 +41,6 @@ public class CarbonMeter : MonoBehaviour
     }
 
     public static bool isFull() {
-        return progress > 0.10f;
+        return progress > 1.0f;
     }
 }

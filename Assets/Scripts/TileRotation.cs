@@ -32,7 +32,7 @@ public class TileRotation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && !GamePlay.isGameOver())
         {
             Vector3 pz = _camera.ScreenToWorldPoint(Input.mousePosition);
             pz.z = 0;
@@ -80,6 +80,8 @@ public class TileRotation : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if(GamePlay.isGameOver())
+            return;
         var  pz = _camera.ScreenToWorldPoint(Input.mousePosition);
         pz.z = 0;
         var cellPosition = _gridLayout.WorldToCell(pz);

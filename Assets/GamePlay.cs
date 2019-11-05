@@ -23,4 +23,8 @@ public class GamePlay : MonoBehaviour
             textMessage.text = "Game Over!";
         }
     }
+
+    public static bool isGameOver() {
+        return CarbonMeter.isFull();
+    }
 }
