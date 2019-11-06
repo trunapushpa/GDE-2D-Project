@@ -13,10 +13,30 @@ public class TileRotation : MonoBehaviour
     private Tilemap _dragLayerTilemap;
     private Sprite[] _landscapeTiles;
     private int _tileNo;
-    private readonly int[] _iTiles = {64, 72};
-    private readonly int[] _lTiles = {79, 86, 78, 71};
-    private readonly int[] _tTiles = {129, 130, 131, 132};
-    private readonly int[] _xTiles = {128};
+    private readonly int[] _fITiles = {64, 72};
+    private readonly int[] _fLTiles = {79, 86, 78, 71};
+    private readonly int[] _fTTiles = {129, 130, 131, 132};
+    private readonly int[] _fXTiles = {128};
+    private readonly int[] _eITiles = {133, 134};
+    private readonly int[] _eLTiles = {135, 136, 137, 138};
+    private readonly int[] _eTTiles = {139, 140, 141, 142};
+    private readonly int[] _eXTiles = {143};
+    private readonly int[] _eTiles = {133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143};
+    private readonly int[] _fTiles = {64, 72, 79, 86, 78, 71, 129, 130, 131, 132, 128};
+    
+    private void FillWaterInTile(Vector3Int cellPosition)
+    {
+        int tileNoToFill = -1;
+        if (_tilemap.GetTile(cellPosition))
+            tileNoToFill = Int32.Parse(_tilemap.GetTile(cellPosition).name.Substring(15, 3));
+        if (!_eTiles.Contains(tileNoToFill))
+            return;
+        int index = Array.IndexOf(_eTiles, tileNoToFill);
+        Tile tile = ScriptableObject.CreateInstance<Tile>();
+        tile.sprite = _landscapeTiles[_fTiles[index]];
+        tile.name = "landscapeTiles_" + String.Format("{0:000}", _fTiles[index]) + ".png";
+        _tilemap.SetTile(cellPosition, tile);
+    }
     
     // Start is called before the first frame update
     void Start()
@@ -47,32 +67,32 @@ public class TileRotation : MonoBehaviour
                 tileNoToRotate = Int32.Parse(_tilemap.GetTile(cellPosition).name.Substring(15, 3));
             
             // I Rotation
-            if (_iTiles.Contains(tileNoToRotate))
+            if (_eITiles.Contains(tileNoToRotate))
             {
-                int indexOfRotatedTile = (Array.IndexOf(_iTiles, tileNoToRotate) + 1) % 2;
+                int indexOfRotatedTile = (Array.IndexOf(_eITiles, tileNoToRotate) + 1) % 2;
                 Tile tile = ScriptableObject.CreateInstance<Tile>();
-                tile.sprite = _landscapeTiles[_iTiles[indexOfRotatedTile]];
-                tile.name = "landscapeTiles_" + String.Format("{0:000}", _iTiles[indexOfRotatedTile]) + ".png";
+                tile.sprite = _landscapeTiles[_eITiles[indexOfRotatedTile]];
+                tile.name = "landscapeTiles_" + String.Format("{0:000}", _eITiles[indexOfRotatedTile]) + ".png";
                 _tilemap.SetTile(cellPosition, tile);
             }
 
             // L Rotation
-            else if (_lTiles.Contains(tileNoToRotate))
+            else if (_eLTiles.Contains(tileNoToRotate))
             {
-                int indexOfRotatedTile = (Array.IndexOf(_lTiles, tileNoToRotate) + 1) % 4;
+                int indexOfRotatedTile = (Array.IndexOf(_eLTiles, tileNoToRotate) + 1) % 4;
                 Tile tile = ScriptableObject.CreateInstance<Tile>();
-                tile.sprite = _landscapeTiles[_lTiles[indexOfRotatedTile]];
-                tile.name = "landscapeTiles_" + String.Format("{0:000}", _lTiles[indexOfRotatedTile]) + ".png";
+                tile.sprite = _landscapeTiles[_eLTiles[indexOfRotatedTile]];
+                tile.name = "landscapeTiles_" + String.Format("{0:000}", _eLTiles[indexOfRotatedTile]) + ".png";
                 _tilemap.SetTile(cellPosition, tile);
             }
             
             // T Rotation
-            else if (_tTiles.Contains(tileNoToRotate))
+            else if (_eTTiles.Contains(tileNoToRotate))
             {
-                int indexOfRotatedTile = (Array.IndexOf(_tTiles, tileNoToRotate) + 1) % 4;
+                int indexOfRotatedTile = (Array.IndexOf(_eTTiles, tileNoToRotate) + 1) % 4;
                 Tile tile = ScriptableObject.CreateInstance<Tile>();
-                tile.sprite = _landscapeTiles[_tTiles[indexOfRotatedTile]];
-                tile.name = "landscapeTiles_" + String.Format("{0:000}", _tTiles[indexOfRotatedTile]) + ".png";
+                tile.sprite = _landscapeTiles[_eTTiles[indexOfRotatedTile]];
+                tile.name = "landscapeTiles_" + String.Format("{0:000}", _eTTiles[indexOfRotatedTile]) + ".png";
                 _tilemap.SetTile(cellPosition, tile);
             }
         }
@@ -88,8 +108,8 @@ public class TileRotation : MonoBehaviour
         if (_tilemap.GetTile(cellPosition))
         {
             _tileNo = Int32.Parse(_tilemap.GetTile(cellPosition).name.Substring(15,3));
-            if (!_iTiles.Contains(_tileNo) && !_lTiles.Contains(_tileNo) && !_tTiles.Contains(_tileNo) &&
-                !_xTiles.Contains(_tileNo))
+            if (!_eITiles.Contains(_tileNo) && !_eLTiles.Contains(_tileNo) && !_eTTiles.Contains(_tileNo) &&
+                !_eXTiles.Contains(_tileNo))
             {
                 _tileNo = -1;
             }
