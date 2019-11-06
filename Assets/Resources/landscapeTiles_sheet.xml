@@ -127,9 +127,20 @@
 	<SubTexture name="landscapeTiles_125.png" x="397" y="1266" width="132" height="99"/>
 	<SubTexture name="landscapeTiles_126.png" x="397" y="1365" width="132" height="99"/>
 	<SubTexture name="landscapeTiles_127.png" x="265" y="1140" width="132" height="98"/>
-	<SubTexture name="landscapeTiles_128.png" x="797" y="0" width="132" height="99"/>
-	<SubTexture name="landscapeTiles_129.png" x="797" y="99" width="132" height="99"/>
-	<SubTexture name="landscapeTiles_130.png" x="797" y="198" width="132" height="99"/>
-	<SubTexture name="landscapeTiles_131.png" x="797" y="297" width="132" height="99"/>
-	<SubTexture name="landscapeTiles_132.png" x="797" y="396" width="132" height="99"/>
+	<SubTexture name="landscapeTiles_128.png" x="797" y="0" width="133" height="99"/>
+	<SubTexture name="landscapeTiles_129.png" x="797" y="99" width="133" height="99"/>
+	<SubTexture name="landscapeTiles_130.png" x="797" y="198" width="133" height="99"/>
+	<SubTexture name="landscapeTiles_131.png" x="797" y="297" width="133" height="99"/>
+	<SubTexture name="landscapeTiles_132.png" x="797" y="396" width="133" height="99"/>
+	<SubTexture name="landscapeTiles_133.png" x="930" y="0" width="133" height="99"/>
+	<SubTexture name="landscapeTiles_134.png" x="930" y="99" width="133" height="99"/>
+	<SubTexture name="landscapeTiles_135.png" x="930" y="198" width="133" height="99"/>
+	<SubTexture name="landscapeTiles_136.png" x="930" y="297" width="133" height="99"/>
+	<SubTexture name="landscapeTiles_137.png" x="930" y="396" width="133" height="99"/>
+	<SubTexture name="landscapeTiles_138.png" x="930" y="495" width="133" height="99"/>
+	<SubTexture name="landscapeTiles_139.png" x="930" y="594" width="133" height="99"/>
+	<SubTexture name="landscapeTiles_140.png" x="930" y="693" width="133" height="99"/>
+	<SubTexture name="landscapeTiles_141.png" x="930" y="792" width="133" height="99"/>
+	<SubTexture name="landscapeTiles_142.png" x="930" y="891" width="133" height="99"/>
+	<SubTexture name="landscapeTiles_143.png" x="930" y="990" width="133" height="99"/>
 </TextureAtlas>
