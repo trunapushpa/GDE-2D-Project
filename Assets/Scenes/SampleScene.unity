@@ -215,7 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0966072e0691a9e0bde4269b7d10f3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 483, y: -368}
+  position: {x: 400, y: -250}
   size: {x: 400, y: 50}
   emptyImage: {fileID: 2800000, guid: dc1409c4985134969af2e895b6ca4712, type: 3}
   fullImage: {fileID: 2800000, guid: 1af142fe190babe98813766bb14c4f23, type: 3}
@@ -933,7 +933,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4b64f3bc203baef68c1c39716389035, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textMessage: {fileID: 0}
+  textMessage: {fileID: 1734832202}
   messagePanel: {fileID: 773585010}
 --- !u!1 &1663935756
 GameObject:
