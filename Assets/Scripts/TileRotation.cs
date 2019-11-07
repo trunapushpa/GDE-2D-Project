@@ -20,6 +20,7 @@ public class TileRotation : MonoBehaviour {
     private readonly int[] _eTTiles = {139, 140, 141, 142};
     private readonly int[] _eXTiles = {143};
     private readonly int[] _eTiles = {133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143};
+    private readonly int[] _probabilites = {400, 400, 30, 30, 30, 30, 18, 18, 18, 18, 8};
     private readonly int[] _fTiles = {64, 72, 79, 86, 78, 71, 129, 130, 131, 132, 128};
     private Vector3Int _draggedTile = new Vector3Int(-50, -50, -50);
     private Random _rand;
@@ -39,6 +40,20 @@ public class TileRotation : MonoBehaviour {
         _tilemap.SetTile(cellPosition, tile);
     }
 
+    private int GetNextTileIndex() {
+        int toss = _rand.Next(1000);
+        int index = 0;
+        int curr = 0;
+        foreach (int p in _probabilites) {
+            curr += p;
+            if (toss <= curr)
+                return index;
+            index++;
+        }
+
+        return index;
+    }
+
     // Start is called before the first frame update
     void Start() {
         _camera = Camera.main;
@@ -50,7 +65,7 @@ public class TileRotation : MonoBehaviour {
         _rand = new Random(Guid.NewGuid().GetHashCode());
         foreach (var tilePos in _tilePalette) {
             Tile tile = ScriptableObject.CreateInstance<Tile>();
-            int index = _rand.Next(4) * 3 + 1;
+            int index = GetNextTileIndex();
             tile.sprite = _landscapeTiles[_eTiles[index]];
             tile.transform = Matrix4x4.Scale(new Vector3((float) 0.8, (float) 0.8, 1));
             tile.name = "landscapeTiles_" + String.Format("{0:000}", _eTiles[index]) + ".png";
@@ -157,7 +172,7 @@ public class TileRotation : MonoBehaviour {
 
                     // New Tile in Tile Palette at Position just used
                     tile = ScriptableObject.CreateInstance<Tile>();
-                    int index = _rand.Next(4) * 3 + 1;
+                    int index = GetNextTileIndex();
                     tile.sprite = _landscapeTiles[_eTiles[index]];
                     tile.transform = Matrix4x4.Scale(new Vector3((float) 0.8, (float) 0.8, 1));
                     tile.name = "landscapeTiles_" + String.Format("{0:000}", _eTiles[index]) + ".png";
