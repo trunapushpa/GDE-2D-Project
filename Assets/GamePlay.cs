@@ -16,8 +16,7 @@ public class GamePlay : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         if(CarbonMeter.isFull()) {
             messagePanel.gameObject.SetActive(true);
             textMessage.text = "Game Over!";
