@@ -387,8 +387,10 @@ MonoBehaviour:
     y: -340
     width: 1114
     height: 859
-  selectedBlocks: []
-  selectedCommands: []
+  selectedBlocks:
+  - {fileID: 654710315}
+  selectedCommands:
+  - {fileID: 654710345}
   variables: []
   description: 
   stepPause: 0
@@ -1045,7 +1047,7 @@ MonoBehaviour:
   indentLevel: 0
   _sceneName:
     stringRef: {fileID: 0}
-    stringVal: SampleScene
+    stringVal: start
   loadingImage: {fileID: 0}
   sceneNameOLD: 
 --- !u!1 &689771974

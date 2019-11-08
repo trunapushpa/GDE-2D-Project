@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 public class GamePlay : MonoBehaviour
@@ -12,14 +13,20 @@ public class GamePlay : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        messagePanel.sizeDelta = new Vector2(Screen.width, Screen.height);
         messagePanel.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update() {
-        if(CarbonMeter.isFull()) {
+        if(CarbonMeter.isWin()) {
             messagePanel.gameObject.SetActive(true);
-            textMessage.text = "Game Over!";
+            textMessage.text = "Level Completed!!";
+            if(Input.GetKey(KeyCode.Escape)) SceneManager.LoadScene("start");
+        } else if(CarbonMeter.isFull()) {
+            messagePanel.gameObject.SetActive(true);
+            textMessage.text = "Game Over!!";
+            if(Input.GetKey(KeyCode.Escape))  SceneManager.LoadScene("start");
         }
     }
 

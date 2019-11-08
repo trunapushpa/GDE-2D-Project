@@ -367,7 +367,7 @@ public class TileRotation : MonoBehaviour {
 
         var watered = 0;
         bool gameOver = false;
-        int housesToWater = 4;
+        int housesToWater = 1;
         for (var x = bounds.xMin; x < bounds.xMax; ++x) {
             for (var y = bounds.yMin; y < bounds.yMax; ++y) {
                 for (var z = bounds.zMin; z < bounds.zMax; ++z) {
@@ -395,7 +395,8 @@ public class TileRotation : MonoBehaviour {
 
         if (housesToWater == 0) {
             Debug.Log("LEVEL COMPLETE");
-            CarbonMeter.changeCarbonLevel(100, 0);
+            CarbonMeter.setWin(true);
+            // CarbonMeter.changeCarbonLevel(100, 0);
             return true;
         }
 

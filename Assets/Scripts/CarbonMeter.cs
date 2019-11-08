@@ -5,6 +5,7 @@ using UnityEngine;
 public class CarbonMeter : MonoBehaviour
 {
     public static float progress = 0;
+    private static bool win = false;
     public Vector2 position = new Vector2(Screen.width*0.02f, Screen.height*0.98f);
     public Vector2 size = new Vector2(400, 50);
     public Texture2D emptyImage;
@@ -36,5 +37,13 @@ public class CarbonMeter : MonoBehaviour
 
     public static bool isFull() {
         return progress >= 1.0f;
+    }
+
+    public static bool isWin() {
+        return win;
+    }
+
+    public static void setWin(bool flag) {
+        win = flag;
     }
 }
