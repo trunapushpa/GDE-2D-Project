@@ -21,16 +21,19 @@ public class TileRotation : MonoBehaviour {
     private readonly int[] _eTTiles = {139, 140, 141, 142};
     private readonly int[] _eXTiles = {143};
     private readonly int[] _eTiles = {133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143};
-    private readonly int[] _probabilites = {400, 400, 30, 30, 30, 30, 18, 18, 18, 18, 8};
+    private readonly int[] _probabilities = {400, 400, 30, 30, 30, 30, 18, 18, 18, 18, 8};
     private readonly int[] _fTiles = {64, 72, 79, 86, 78, 71, 129, 130, 131, 132, 128, 66};
     private readonly int[] _upEdgeTiles = {134, 135, 136, 140, 141, 142, 143, 72, 79, 86, 130, 131, 132, 128, 66, 67};
     private readonly int[] _downEdgeTiles = {134, 137, 138, 139, 140, 142, 143, 72, 78, 71, 129, 130, 132, 128, 66, 67};
     private readonly int[] _leftEdgeTiles = {133, 135, 138, 139, 140, 141, 143, 64, 79, 71, 129, 130, 131, 128, 66, 67};
-    private readonly int[] _rightEdgeTiles = {133, 136, 137, 139, 141, 142, 143, 64, 86, 78,129, 131, 132, 128, 66, 67};
-    
+
+    private readonly int[] _rightEdgeTiles =
+        {133, 136, 137, 139, 141, 142, 143, 64, 86, 78, 129, 131, 132, 128, 66, 67};
+
     private Vector3Int _draggedTile = new Vector3Int(-50, -50, -50);
     private Random _rand;
     private readonly Vector3Int[] _tilePalette = {new Vector3Int(0, 15, 0), new Vector3Int(-2, 13, 0)};
+    private readonly Vector3Int _diggerPalette = new Vector3Int(-4, 11, 0);
 
     private int GetTileNo(Vector3Int cellPosition) {
         var tileNo = -1;
@@ -38,7 +41,7 @@ public class TileRotation : MonoBehaviour {
             tileNo = Int32.Parse(_tilemap.GetTile(cellPosition).name.Substring(15, 3));
         return tileNo;
     }
-    
+
     private bool IsPipe(int tileNo) {
         return tileNo != 66 && (_eTiles.Contains(tileNo) || _fTiles.Contains(tileNo));
     }
@@ -68,7 +71,7 @@ public class TileRotation : MonoBehaviour {
         int toss = _rand.Next(1000);
         int index = 0;
         int curr = 0;
-        foreach (int p in _probabilites) {
+        foreach (int p in _probabilities) {
             curr += p;
             if (toss <= curr)
                 return index;
@@ -95,6 +98,12 @@ public class TileRotation : MonoBehaviour {
             tile.name = "landscapeTiles_" + String.Format("{0:000}", _eTiles[index]) + ".png";
             _tilemap.SetTile(tilePos, tile);
         }
+
+        Tile diggerTile = ScriptableObject.CreateInstance<Tile>();
+        diggerTile.sprite = _landscapeTiles[146];
+        diggerTile.transform = Matrix4x4.Scale(new Vector3((float) 0.8, (float) 0.8, 1));
+        diggerTile.name = "landscapeTiles_" + String.Format("{0:000}", 146) + ".png";
+        _tilemap.SetTile(_diggerPalette, diggerTile);
     }
 
     // Update is called once per frame
@@ -156,13 +165,17 @@ public class TileRotation : MonoBehaviour {
         var pz = _camera.ScreenToWorldPoint(Input.mousePosition);
         pz.z = 0;
         var cellPosition = _gridLayout.WorldToCell(pz);
-        if (_tilemap.GetTile(cellPosition) && _tilePalette.Contains(cellPosition)) {
+        if (_tilemap.GetTile(cellPosition) &&
+            (_tilePalette.Contains(cellPosition) || cellPosition.Equals(_diggerPalette))) {
             _tileNo = GetTileNo(cellPosition);
             _draggedTile = cellPosition;
             if (!_eITiles.Contains(_tileNo) && !_eLTiles.Contains(_tileNo) && !_eTTiles.Contains(_tileNo) &&
-                !_eXTiles.Contains(_tileNo)) {
+                !_eXTiles.Contains(_tileNo) && !_tileNo.Equals(146)) {
                 _tileNo = -1;
                 _draggedTile = new Vector3Int(-50, -50, -50);
+            }
+            if (_tileNo != -1) {
+                _tilemap.SetTile(cellPosition, null);
             }
         }
     }
@@ -186,24 +199,77 @@ public class TileRotation : MonoBehaviour {
             var pz = _camera.ScreenToWorldPoint(Input.mousePosition);
             pz.z = 0;
             var cellPosition = _gridLayout.WorldToCell(pz);
-            if (_tilemap.GetTile(cellPosition) && !_tilePalette.Contains(cellPosition)) {
+            if (_tilemap.GetTile(cellPosition) && !_tilePalette.Contains(cellPosition) &&
+                !_diggerPalette.Equals(cellPosition)) {
                 int tileNo = GetTileNo(cellPosition);
-                // 67 = Ground, 83 = Brown Farm
-                if (_tilemap.GetTile(cellPosition).name[0] == 'l' && (tileNo == 67 || tileNo == 83)) {
+                // 67 = Ground, 83 = Brown Farm, 145 = Green Farm
+                if (_tilemap.GetTile(cellPosition).name[0] == 'l' && (tileNo == 67 || tileNo == 83 || tileNo == 145)) {
+                    // 146 = Digger
+                    if (_tileNo == 146) {
+                        Tile tile = ScriptableObject.CreateInstance<Tile>();
+                        // 66 = Water
+                        tile.sprite = _landscapeTiles[66];
+                        tile.name = "landscapeTiles_" + String.Format("{0:000}", 66) + ".png";
+                        tile.transform = Matrix4x4.Scale(new Vector3((float) 0.8, (float) 0.8, 1));
+                        _tilemap.SetTile(cellPosition, tile);
+                        // 59 = Bad Ground
+                        const int radius = 3;
+                        for (int r = 0; r <= radius; r++) {
+                            for (int i = -r; i <= r; i++) {
+                                foreach (var j in new [] {r - Math.Abs(i), -r + Math.Abs(i)}) {
+                                    var newCell = cellPosition;
+                                    newCell.x += i;
+                                    newCell.y += j;
+                                    if (!_tilemap.GetTile(newCell) || _tilePalette.Contains(newCell) ||
+                                        _diggerPalette.Equals(newCell) || _tilemap.GetTile(newCell).name[0] != 'l' ||
+                                        (GetTileNo(newCell) != 67 && GetTileNo(newCell) != 83 && GetTileNo(newCell) != 145))
+                                        continue;
+                                    tile = ScriptableObject.CreateInstance<Tile>();
+                                    tile.sprite = _landscapeTiles[59];
+                                    tile.name = "landscapeTiles_" + String.Format("{0:000}", 59) + ".png";
+                                    tile.transform = Matrix4x4.Scale(new Vector3((float) 0.8, (float) 0.8, 1));
+                                    _tilemap.SetTile(newCell, tile);
+                                }
+                            }
+                        }
+                        
+                        // New digger in digger Palette
+                        tile = ScriptableObject.CreateInstance<Tile>();
+                        tile.sprite = _landscapeTiles[_tileNo];
+                        tile.name = "landscapeTiles_" + String.Format("{0:000}", _tileNo) + ".png";
+                        tile.transform = Matrix4x4.Scale(new Vector3((float) 0.8, (float) 0.8, 1));
+                        _tilemap.SetTile(_draggedTile, tile);
+                    }
+                    else {
+                        Tile tile = ScriptableObject.CreateInstance<Tile>();
+                        tile.sprite = _landscapeTiles[_tileNo];
+                        tile.name = "landscapeTiles_" + String.Format("{0:000}", _tileNo) + ".png";
+                        tile.transform = Matrix4x4.Scale(new Vector3((float) 0.8, (float) 0.8, 1));
+                        _tilemap.SetTile(cellPosition, tile);
+
+                        // New Tile in Tile Palette at Position just used
+                        tile = ScriptableObject.CreateInstance<Tile>();
+                        int index = GetNextTileIndex();
+                        tile.sprite = _landscapeTiles[_eTiles[index]];
+                        tile.transform = Matrix4x4.Scale(new Vector3((float) 0.8, (float) 0.8, 1));
+                        tile.name = "landscapeTiles_" + String.Format("{0:000}", _eTiles[index]) + ".png";
+                        _tilemap.SetTile(_draggedTile, tile);
+                    }
+                }
+                else {
                     Tile tile = ScriptableObject.CreateInstance<Tile>();
                     tile.sprite = _landscapeTiles[_tileNo];
                     tile.name = "landscapeTiles_" + String.Format("{0:000}", _tileNo) + ".png";
                     tile.transform = Matrix4x4.Scale(new Vector3((float) 0.8, (float) 0.8, 1));
-                    _tilemap.SetTile(cellPosition, tile);
-
-                    // New Tile in Tile Palette at Position just used
-                    tile = ScriptableObject.CreateInstance<Tile>();
-                    int index = GetNextTileIndex();
-                    tile.sprite = _landscapeTiles[_eTiles[index]];
-                    tile.transform = Matrix4x4.Scale(new Vector3((float) 0.8, (float) 0.8, 1));
-                    tile.name = "landscapeTiles_" + String.Format("{0:000}", _eTiles[index]) + ".png";
                     _tilemap.SetTile(_draggedTile, tile);
                 }
+            }
+            else {
+                Tile tile = ScriptableObject.CreateInstance<Tile>();
+                tile.sprite = _landscapeTiles[_tileNo];
+                tile.name = "landscapeTiles_" + String.Format("{0:000}", _tileNo) + ".png";
+                tile.transform = Matrix4x4.Scale(new Vector3((float) 0.8, (float) 0.8, 1));
+                _tilemap.SetTile(_draggedTile, tile);
             }
         }
 
@@ -211,27 +277,30 @@ public class TileRotation : MonoBehaviour {
         _tileNo = -1;
         _draggedTile = new Vector3Int(-50, -50, -50);
     }
-    
+
     private bool WillWater(Vector3Int pos, int tileNo) {
         bool shouldWater = false;
         if (_leftEdgeTiles.Contains(tileNo)) {
             int leftTile = GetTileNo(pos + Vector3Int.left);
-            shouldWater |= (HasWater(leftTile) && _rightEdgeTiles.Contains(leftTile) && 
+            shouldWater |= (HasWater(leftTile) && _rightEdgeTiles.Contains(leftTile) &&
                             (IsPipe(leftTile) || IsPipe(tileNo)));
         }
+
         if (_rightEdgeTiles.Contains(tileNo)) {
             int rightTile = GetTileNo(pos + Vector3Int.right);
             shouldWater |= (HasWater(rightTile) && _leftEdgeTiles.Contains(rightTile) &&
                             (IsPipe(rightTile) || IsPipe(tileNo)));
         }
+
         if (_upEdgeTiles.Contains(tileNo)) {
             int upTile = GetTileNo(pos + Vector3Int.up);
-            shouldWater |= (HasWater(upTile) && _downEdgeTiles.Contains(upTile) && 
+            shouldWater |= (HasWater(upTile) && _downEdgeTiles.Contains(upTile) &&
                             (IsPipe(upTile) || IsPipe(tileNo)));
         }
+
         if (_downEdgeTiles.Contains(tileNo)) {
             int downTile = GetTileNo(pos + Vector3Int.down);
-            shouldWater |= (HasWater(downTile) && _upEdgeTiles.Contains(downTile) && 
+            shouldWater |= (HasWater(downTile) && _upEdgeTiles.Contains(downTile) &&
                             (IsPipe(downTile) || IsPipe(tileNo)));
         }
 
@@ -244,9 +313,9 @@ public class TileRotation : MonoBehaviour {
 
         var watered = 0;
         bool gameOver = false;
-        for (var x=bounds.xMin; x<bounds.xMax; ++x) {
-            for (var y=bounds.yMin; y<bounds.yMax; ++y) {
-                for (var z=bounds.zMin; z<bounds.zMax; ++z) {
+        for (var x = bounds.xMin; x < bounds.xMax; ++x) {
+            for (var y = bounds.yMin; y < bounds.yMax; ++y) {
+                for (var z = bounds.zMin; z < bounds.zMax; ++z) {
                     var pos = new Vector3Int(x, y, z);
                     var tileNo = GetTileNo(pos);
                     if (IsPipe(tileNo) && !HasWater(tileNo) && WillWater(pos, tileNo)) {

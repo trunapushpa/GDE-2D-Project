@@ -440,6 +440,9 @@ TextureImporter:
   - first:
       213: 6326313137879518621
     second: landscapeTiles_145.png
+  - first:
+      213: -6873163090172784317
+    second: landscapeTiles_146.png
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -3585,6 +3588,27 @@ TextureImporter:
       bones: []
       spriteID: 
       internalID: 6326313137879518621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: landscapeTiles_146.png
+      rect:
+        serializedVersion: 2
+        x: 930
+        y: 662
+        width: 132
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 
+      internalID: -6873163090172784317
       vertices: []
       indices: 
       edges: []

@@ -145,4 +145,5 @@
 	<SubTexture name="landscapeTiles_143.png" x="930" y="990" width="133" height="99"/>
 	<SubTexture name="landscapeTiles_144.png" x="930" y="1089" width="132" height="99"/>
 	<SubTexture name="landscapeTiles_145.png" x="930" y="1188" width="132" height="99"/>
+	<SubTexture name="landscapeTiles_146.png" x="930" y="1287" width="132" height="99"/>
 </TextureAtlas>
