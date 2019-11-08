@@ -20,21 +20,26 @@ public class TileRotation : MonoBehaviour {
     private readonly int[] _eLTiles = {135, 136, 137, 138};
     private readonly int[] _eTTiles = {139, 140, 141, 142};
     private readonly int[] _eXTiles = {143};
-    private readonly int[] _eTiles = {133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143};
+    private readonly int[] _eTiles = {133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 83};
+
+    // TODO : Reset probabilities
     private readonly int[] _probabilities = {400, 400, 30, 30, 30, 30, 18, 18, 18, 18, 8};
-    private readonly int[] _fTiles = {64, 72, 79, 86, 78, 71, 129, 130, 131, 132, 128, 66};
+    private int[] _fTiles = {64, 72, 79, 86, 78, 71, 129, 130, 131, 132, 128, 145, 66};
     private readonly int[] _upEdgeTiles = {134, 135, 136, 140, 141, 142, 143, 72, 79, 86, 130, 131, 132, 128, 66, 67};
     private readonly int[] _downEdgeTiles = {134, 137, 138, 139, 140, 142, 143, 72, 78, 71, 129, 130, 132, 128, 66, 67};
     private readonly int[] _leftEdgeTiles = {133, 135, 138, 139, 140, 141, 143, 64, 79, 71, 129, 130, 131, 128, 66, 67};
     private int _numberOfPipes = 0;
     private int _numberOfFarms = 0;
-
+    private readonly int _speed = 300;
+    private int _timer = 400;
+    
     private readonly int[] _rightEdgeTiles =
         {133, 136, 137, 139, 141, 142, 143, 64, 86, 78, 129, 131, 132, 128, 66, 67};
 
     private Vector3Int _draggedTile = new Vector3Int(-50, -50, -50);
     private Random _rand;
-    private readonly Vector3Int[] _tilePalette = {new Vector3Int(0, 15, 0), new Vector3Int(-2, 13, 0)};
+    private readonly Vector3Int[] _tilePalette = {new Vector3Int(0, 15, 0), 
+        new Vector3Int(-2, 13, 0)};
     private readonly Vector3Int _diggerPalette = new Vector3Int(-4, 11, 0);
 
     private int GetTileNo(Vector3Int cellPosition) {
@@ -49,8 +54,11 @@ public class TileRotation : MonoBehaviour {
     }
 
     private bool IsHouse(int tileNo) {
-        // TODO: Check if the current cell is a house
-        return false;
+        return tileNo == 81;
+    }
+
+    private bool IsFarm(int tileNo) {
+        return tileNo == 83;
     }
 
     private bool HasWater(int tileNo) {
@@ -110,30 +118,20 @@ public class TileRotation : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (Input.GetKeyUp("space")) {
+        _timer--;
+        if (_timer == 0 || Input.GetKeyUp("space")) {
+            _timer = _speed;
             if (!AddFlow()) {
                 CarbonMeter.changeCarbonLevel(100, 0);
             }
         }
-        if (Input.GetKeyUp("p")) {
-            Debug.Log("+ pressed");
-            _numberOfPipes++;
-            CarbonMeter.changeCarbonLevel(_numberOfPipes, _numberOfFarms);
-        }
-        if (Input.GetKeyUp("-")) {
-            Debug.Log("- pressed");
-            _numberOfFarms++;
-            CarbonMeter.changeCarbonLevel(_numberOfPipes, _numberOfFarms);
-        }
-
+        
         if (Input.GetMouseButtonDown(1) && !GamePlay.isGameOver()) {
             Vector3 pz = _camera.ScreenToWorldPoint(Input.mousePosition);
             pz.z = 0;
 
             // convert mouse click's position to Grid position
             Vector3Int cellPosition = _gridLayout.WorldToCell(pz);
-            //Debug.Log(cellPosition);
-            //Debug.Log(_tilemap.GetTile(cellPosition));
 
             if (!_tilePalette.Contains(cellPosition)) {
                 return;
@@ -261,7 +259,9 @@ public class TileRotation : MonoBehaviour {
                         tile.name = "landscapeTiles_" + String.Format("{0:000}", _tileNo) + ".png";
                         tile.transform = Matrix4x4.Scale(new Vector3((float) 0.8, (float) 0.8, 1));
                         _tilemap.SetTile(cellPosition, tile);
-
+                        _numberOfPipes++;
+                        CarbonMeter.changeCarbonLevel(_numberOfPipes, _numberOfFarms);
+                        
                         // New Tile in Tile Palette at Position just used
                         tile = ScriptableObject.CreateInstance<Tile>();
                         int index = GetNextTileIndex();
@@ -321,13 +321,42 @@ public class TileRotation : MonoBehaviour {
 
         return shouldWater;
     }
+    
+    private bool IsNearWater(Vector3Int pos) {
+        bool nearWater = false;
 
+        int leftTile = GetTileNo(pos + Vector3Int.left);
+        nearWater |= HasWater(leftTile) || WillWater(pos + Vector3Int.left, leftTile);
+
+        int rightTile = GetTileNo(pos + Vector3Int.right);
+        nearWater |= HasWater(rightTile) || WillWater(pos + Vector3Int.right, rightTile);
+
+        int upTile = GetTileNo(pos + Vector3Int.up);
+        nearWater |= HasWater(upTile) || WillWater(pos + Vector3Int.up, upTile);
+
+        int downTile = GetTileNo(pos + Vector3Int.down);
+        nearWater |= HasWater(downTile) || WillWater(pos + Vector3Int.down, downTile);
+
+        return nearWater;
+    }
+
+    public void WaterFarm(Vector3Int pos) {
+        int tileNo = GetTileNo(pos);
+        if (IsFarm(tileNo)) {
+            FillWaterInTile(pos);
+            _numberOfFarms++;
+            WaterFarm(pos + Vector3Int.down);
+            WaterFarm(pos + Vector3Int.right);
+        }
+    }
+    
     public bool AddFlow() {
         var toWaterPos = new List<Vector3Int>();
         var bounds = _tilemap.cellBounds;
 
         var watered = 0;
         bool gameOver = false;
+        int housesToWater = 4;
         for (var x = bounds.xMin; x < bounds.xMax; ++x) {
             for (var y = bounds.yMin; y < bounds.yMax; ++y) {
                 for (var z = bounds.zMin; z < bounds.zMax; ++z) {
@@ -338,10 +367,25 @@ public class TileRotation : MonoBehaviour {
                         ++watered;
                     }
 
+                    if (IsFarm(tileNo) && IsNearWater(pos)) {
+                        WaterFarm(pos);
+                        CarbonMeter.changeCarbonLevel(_numberOfPipes, _numberOfFarms);
+                    }
+
+                    if (IsHouse(tileNo) && IsNearWater(pos))
+                        housesToWater--;
+                    
+
                     if (!IsPipe(tileNo) && !HasWater(tileNo) && WillWater(pos, tileNo) && !IsHouse(tileNo))
                         gameOver = true;
                 }
             }
+        }
+
+        if (housesToWater == 0) {
+            Debug.Log("LEVEL COMPLETE");
+            CarbonMeter.changeCarbonLevel(100, 0);
+            return true;
         }
 
         toWaterPos.ForEach(pos => FillWaterInTile(pos));

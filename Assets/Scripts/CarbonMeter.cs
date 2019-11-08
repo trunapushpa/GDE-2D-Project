@@ -27,7 +27,8 @@ public class CarbonMeter : MonoBehaviour
     }
 
     public static void changeCarbonLevel(int num_pipes, int num_farms) {
-        float carbon_pipe = 0.01f;
+        // TODO : Set values
+        float carbon_pipe = 0.03f;
         float carbon_farm = -0.01f;
         progress = num_pipes * carbon_pipe + num_farms * carbon_farm;
         progress = Mathf.Max(progress, 0.0f);
