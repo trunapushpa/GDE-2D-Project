@@ -26,6 +26,8 @@ public class TileRotation : MonoBehaviour {
     private readonly int[] _upEdgeTiles = {134, 135, 136, 140, 141, 142, 143, 72, 79, 86, 130, 131, 132, 128, 66, 67};
     private readonly int[] _downEdgeTiles = {134, 137, 138, 139, 140, 142, 143, 72, 78, 71, 129, 130, 132, 128, 66, 67};
     private readonly int[] _leftEdgeTiles = {133, 135, 138, 139, 140, 141, 143, 64, 79, 71, 129, 130, 131, 128, 66, 67};
+    private int _numberOfPipes = 0;
+    private int _numberOfFarms = 0;
 
     private readonly int[] _rightEdgeTiles =
         {133, 136, 137, 139, 141, 142, 143, 64, 86, 78, 129, 131, 132, 128, 66, 67};
@@ -108,9 +110,22 @@ public class TileRotation : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (Input.GetKeyUp("space"))
-            if (!AddFlow())
-                Debug.Log("GAME OVER");
+        if (Input.GetKeyUp("space")) {
+            if (!AddFlow()) {
+                CarbonMeter.changeCarbonLevel(100, 0);
+            }
+        }
+        if (Input.GetKeyUp("p")) {
+            Debug.Log("+ pressed");
+            _numberOfPipes++;
+            CarbonMeter.changeCarbonLevel(_numberOfPipes, _numberOfFarms);
+        }
+        if (Input.GetKeyUp("-")) {
+            Debug.Log("- pressed");
+            _numberOfFarms++;
+            CarbonMeter.changeCarbonLevel(_numberOfPipes, _numberOfFarms);
+        }
+
         if (Input.GetMouseButtonDown(1) && !GamePlay.isGameOver()) {
             Vector3 pz = _camera.ScreenToWorldPoint(Input.mousePosition);
             pz.z = 0;

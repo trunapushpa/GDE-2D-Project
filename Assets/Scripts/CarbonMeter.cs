@@ -9,7 +9,6 @@ public class CarbonMeter : MonoBehaviour
     public Vector2 size = new Vector2(400, 50);
     public Texture2D emptyImage;
     public Texture2D fullImage;
-    public float diff = 0.002f;
     public float speed = 0;
     bool check = false;
     
@@ -25,22 +24,16 @@ public class CarbonMeter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!check)
-        {
-            StartCoroutine(delay());
-        }
     }
 
-    IEnumerator delay()
-    {
-        check = true;
-        if(!isFull())
-            progress = progress + diff;
-        yield return new WaitForSeconds(speed);
-        check = false;
+    public static void changeCarbonLevel(int num_pipes, int num_farms) {
+        float carbon_pipe = 0.01f;
+        float carbon_farm = -0.01f;
+        progress = num_pipes * carbon_pipe + num_farms * carbon_farm;
+        progress = Mathf.Max(progress, 0.0f);
     }
 
     public static bool isFull() {
-        return progress > 1.0f;
+        return progress >= 1.0f;
     }
 }
