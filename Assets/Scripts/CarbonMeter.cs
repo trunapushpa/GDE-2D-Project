@@ -5,7 +5,7 @@ using UnityEngine;
 public class CarbonMeter : MonoBehaviour
 {
     public static float progress = 0;
-    public Vector2 position = new Vector2(400, -250);
+    public Vector2 position = new Vector2(Screen.width*0.02f, Screen.height*0.98f);
     public Vector2 size = new Vector2(400, 50);
     public Texture2D emptyImage;
     public Texture2D fullImage;
@@ -16,8 +16,8 @@ public class CarbonMeter : MonoBehaviour
     // Start is called before the first frame update
     void OnGUI()
     {
-        Vector2 pivot = new Vector2(Screen.width/2, Screen.height/2);
-        GUIUtility.RotateAroundPivot (-90.0f, pivot);
+        // Vector2 pivot = new Vector2(Screen.width/2, Screen.height/2);
+        // GUIUtility.RotateAroundPivot (-90.0f, pivot);
         GUI.DrawTexture(new Rect(position.x, position.y, size.x, size.y), emptyImage);
         GUI.DrawTexture(new Rect(position.x, position.y, size.x * Mathf.Clamp01(progress), size.y), fullImage);
     }
