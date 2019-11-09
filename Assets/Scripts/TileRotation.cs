@@ -10,6 +10,7 @@ public class TileRotation : MonoBehaviour {
     private GridLayout _gridLayout;
     private Tilemap _tilemap;
     private Tilemap _dragLayerTilemap;
+    private Tilemap _buildingsTilemap;
     private Sprite[] _landscapeTiles;
     private int _tileNo;
     private readonly int[] _fITiles = {64, 72};
@@ -40,11 +41,11 @@ public class TileRotation : MonoBehaviour {
     private Random _rand;
 
     private readonly Vector3Int[] _tilePalette = {
-        new Vector3Int(0, 15, 0),
-        new Vector3Int(-2, 13, 0)
+        new Vector3Int(-1, 14, 0),
+        new Vector3Int(-3, 12, 0)
     };
 
-    private readonly Vector3Int _diggerPalette = new Vector3Int(-4, 11, 0);
+    private readonly Vector3Int _diggerPalette = new Vector3Int(-5, 10, 0);
 
     private int GetTileNo(Vector3Int cellPosition) {
         var tileNo = -1;
@@ -101,6 +102,7 @@ public class TileRotation : MonoBehaviour {
         _gridLayout = transform.parent.GetComponentInParent<GridLayout>();
         _tilemap = GetComponents<Tilemap>()[0];
         _dragLayerTilemap = GetComponentsInChildren<Tilemap>()[1];
+        _buildingsTilemap = GetComponentsInChildren<Tilemap>()[2];
         _landscapeTiles = Resources.LoadAll<Sprite>("landscapeTiles_sheet");
         _tileNo = -1;
         _rand = new Random(Guid.NewGuid().GetHashCode());
@@ -122,6 +124,7 @@ public class TileRotation : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        Debug.Log(Input.mousePosition);
         _timer--;
         if (_timer == 0 || Input.GetKeyUp("space")) {
             _timer = _speed;
@@ -246,6 +249,7 @@ public class TileRotation : MonoBehaviour {
                                     if (IsFarm(GetTileNo(newCell)) && HasWater(GetTileNo(newCell))) {
                                         _numberOfFarms--;
                                     }
+
                                     _numberOfPipes++;
                                     tile = ScriptableObject.CreateInstance<Tile>();
                                     tile.sprite = _landscapeTiles[59];
@@ -255,6 +259,7 @@ public class TileRotation : MonoBehaviour {
                                 }
                             }
                         }
+
                         CarbonMeter.changeCarbonLevel(_numberOfPipes, _numberOfFarms);
 
                         // New digger in digger Palette
@@ -367,7 +372,7 @@ public class TileRotation : MonoBehaviour {
 
         var watered = 0;
         bool gameOver = false;
-        int housesToWater = 1;
+        int housesToWater = _buildingsTilemap.GetUsedTilesCount();
         for (var x = bounds.xMin; x < bounds.xMax; ++x) {
             for (var y = bounds.yMin; y < bounds.yMax; ++y) {
                 for (var z = bounds.zMin; z < bounds.zMax; ++z) {
@@ -383,9 +388,11 @@ public class TileRotation : MonoBehaviour {
                         CarbonMeter.changeCarbonLevel(_numberOfPipes, _numberOfFarms);
                     }
 
-                    if (IsHouse(tileNo) && IsNearWater(pos))
+                    if (IsHouse(tileNo) && IsNearWater(pos)) {
                         housesToWater--;
-
+                        BuildingsMeter.ChangeBuildingsLevel(_buildingsTilemap.GetUsedTilesCount() - housesToWater,
+                            _buildingsTilemap.GetUsedTilesCount());
+                    }
 
                     if (!IsPipe(tileNo) && !HasWater(tileNo) && WillWater(pos, tileNo) && !IsHouse(tileNo))
                         gameOver = true;
