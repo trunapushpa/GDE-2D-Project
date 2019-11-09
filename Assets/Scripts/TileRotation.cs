@@ -32,7 +32,7 @@ public class TileRotation : MonoBehaviour {
     private int _numberOfPipes = 0;
     private int _numberOfFarms = 0;
     private readonly int _speed = 300;
-    private int _timer = 400;
+    private int _timer = 100000;
     private int _globalHousesToWater;
 
     private readonly int[] _rightEdgeTiles =
@@ -253,6 +253,8 @@ public class TileRotation : MonoBehaviour {
                                     }
 
                                     _numberOfPipes++;
+                                    if (_timer > 400)
+                                        _timer = 400;
                                     tile = ScriptableObject.CreateInstance<Tile>();
                                     tile.sprite = _landscapeTiles[59];
                                     tile.name = "landscapeTiles_" + String.Format("{0:000}", 59) + ".png";
@@ -290,6 +292,8 @@ public class TileRotation : MonoBehaviour {
                         tile.transform = Matrix4x4.Scale(new Vector3((float) 0.8, (float) 0.8, 1));
                         _tilemap.SetTile(cellPosition, tile);
                         _numberOfPipes++;
+                        if (_timer > 400)
+                            _timer = 400;
                         CarbonMeter.changeCarbonLevel(_numberOfPipes, _numberOfFarms);
 
                         // New Tile in Tile Palette at Position just used
