@@ -131,7 +131,6 @@ GameObject:
   - component: {fileID: 176067602}
   - component: {fileID: 176067601}
   - component: {fileID: 176067600}
-  - component: {fileID: 176067599}
   - component: {fileID: 176067606}
   - component: {fileID: 176067605}
   - component: {fileID: 176067604}
@@ -150,6 +149,8 @@ GameObject:
   - component: {fileID: 176067619}
   - component: {fileID: 176067618}
   - component: {fileID: 176067620}
+  - component: {fileID: 176067621}
+  - component: {fileID: 176067599}
   m_Layer: 0
   m_Name: Flowchart
   m_TagString: Untagged
@@ -166,11 +167,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 176067598}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2f6487d21a03404cb21b245f0242e79, type: 3}
+  m_Script: {fileID: 11500000, guid: 00d03ae0919f04264b018681ed534177, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentBlock: {fileID: 176067600}
-  waitForFrames: 1
+  itemId: 18
+  indentLevel: 0
+  _sceneName:
+    stringRef: {fileID: 0}
+    stringVal: Level1
+  loadingImage: {fileID: 0}
+  sceneNameOLD: 
 --- !u!114 &176067600
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -194,7 +200,7 @@ MonoBehaviour:
   itemId: 0
   blockName: START
   description: 
-  eventHandler: {fileID: 176067599}
+  eventHandler: {fileID: 176067621}
   commandList:
   - {fileID: 176067608}
   - {fileID: 176067607}
@@ -211,11 +217,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  scrollPos: {x: 22.805803, y: 8.21366}
+  scrollPos: {x: -219.23376, y: 6.9791164}
   variablesScrollPos: {x: 0, y: 0}
   variablesExpanded: 1
   blockViewHeight: 400
-  zoom: 0.94840896
+  zoom: 1
   scrollViewRect:
     serializedVersion: 2
     x: -343
@@ -224,8 +230,7 @@ MonoBehaviour:
     height: 859
   selectedBlocks:
   - {fileID: 176067605}
-  selectedCommands:
-  - {fileID: 176067620}
+  selectedCommands: []
   variables: []
   description: 
   stepPause: 0
@@ -450,7 +455,8 @@ MonoBehaviour:
   blockName: Level1
   description: Level 1
   eventHandler: {fileID: 0}
-  commandList: []
+  commandList:
+  - {fileID: 176067599}
 --- !u!114 &176067612
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -660,6 +666,20 @@ MonoBehaviour:
   hideThisOption:
     booleanRef: {fileID: 0}
     booleanVal: 0
+--- !u!114 &176067621
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 176067598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2f6487d21a03404cb21b245f0242e79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentBlock: {fileID: 176067600}
+  waitForFrames: 1
 --- !u!1 &395568245
 GameObject:
   m_ObjectHideFlags: 0
@@ -795,15 +815,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1c28293ea95a925319501973096eed9d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bcf8b56b1ddffa4488904bd65c499fb0, type: 3}
   m_Color: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 9.93, y: 9.98}
+  m_Size: {x: 48.54, y: 23.890781}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &770677932
@@ -814,8 +834,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 770677930}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -1.27, y: -0, z: 0}
+  m_LocalScale: {x: 0.41869876, y: 0.41869876, z: 0.41869876}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -894,7 +914,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewSize: 3.5865428
-  primaryAspectRatio: {x: 4, y: 3}
+  primaryAspectRatio: {x: 16, y: 9}
   secondaryAspectRatio: {x: 2, y: 1}
 --- !u!4 &1162293025
 Transform:
