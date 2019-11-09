@@ -22,15 +22,19 @@ public class GamePlay : MonoBehaviour
         if(CarbonMeter.isWin()) {
             messagePanel.gameObject.SetActive(true);
             textMessage.text = "Level Completed!!";
-            if(Input.GetKey(KeyCode.Escape)) SceneManager.LoadScene("start");
         } else if(CarbonMeter.isFull()) {
             messagePanel.gameObject.SetActive(true);
             textMessage.text = "Game Over!!";
-            if(Input.GetKey(KeyCode.Escape))  SceneManager.LoadScene("start");
+        }
+        if(Input.GetKey(KeyCode.Escape) && isGameOver()) {
+            CarbonMeter.changeCarbonLevel(0, 0);
+            BuildingsMeter.ChangeBuildingsLevel(0, 0);
+            SceneManager.LoadScene("start");
+            CarbonMeter.setWin(false);
         }
     }
 
     public static bool isGameOver() {
-        return CarbonMeter.isFull();
+        return CarbonMeter.isFull() || CarbonMeter.isWin();
     }
 }
