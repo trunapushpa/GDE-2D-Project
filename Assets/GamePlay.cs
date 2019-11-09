@@ -21,7 +21,7 @@ public class GamePlay : MonoBehaviour
     void Update() {
         if(CarbonMeter.isWin()) {
             messagePanel.gameObject.SetActive(true);
-            textMessage.text = "Level Completed!!";
+            textMessage.text = "Level Cleared!!";
         } else if(CarbonMeter.isFull()) {
             messagePanel.gameObject.SetActive(true);
             textMessage.text = "Game Over!!";
