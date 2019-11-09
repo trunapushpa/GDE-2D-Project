@@ -33,6 +33,7 @@ public class TileRotation : MonoBehaviour {
     private int _numberOfFarms = 0;
     private readonly int _speed = 300;
     private int _timer = 400;
+    private int _globalHousesToWater;
 
     private readonly int[] _rightEdgeTiles =
         {133, 136, 137, 139, 141, 142, 143, 64, 86, 78, 129, 131, 132, 128, 66, 67};
@@ -106,6 +107,7 @@ public class TileRotation : MonoBehaviour {
         _landscapeTiles = Resources.LoadAll<Sprite>("landscapeTiles_sheet");
         _tileNo = -1;
         _rand = new Random(Guid.NewGuid().GetHashCode());
+        _globalHousesToWater = _buildingsTilemap.GetUsedTilesCount();
         foreach (var tilePos in _tilePalette) {
             Tile tile = ScriptableObject.CreateInstance<Tile>();
             int index = GetNextTileIndex();
@@ -261,6 +263,18 @@ public class TileRotation : MonoBehaviour {
                         }
 
                         CarbonMeter.changeCarbonLevel(_numberOfPipes, _numberOfFarms);
+                        for (int i = -1; i <= 1; i++) {
+                            for (int j = -1; j <= 1; j++) {
+                                var x = new Vector3Int(cellPosition.x + i, cellPosition.y + j, 0);
+                                if (IsHouse(GetTileNo(x))) {
+                                    _globalHousesToWater--;
+                                }
+                            }
+                        }
+
+                        BuildingsMeter.ChangeBuildingsLevel(
+                            _buildingsTilemap.GetUsedTilesCount() - _globalHousesToWater,
+                            _buildingsTilemap.GetUsedTilesCount());
 
                         // New digger in digger Palette
                         tile = ScriptableObject.CreateInstance<Tile>();
@@ -392,6 +406,7 @@ public class TileRotation : MonoBehaviour {
                         housesToWater--;
                         BuildingsMeter.ChangeBuildingsLevel(_buildingsTilemap.GetUsedTilesCount() - housesToWater,
                             _buildingsTilemap.GetUsedTilesCount());
+                        _globalHousesToWater = housesToWater;
                     }
 
                     if (!IsPipe(tileNo) && !HasWater(tileNo) && WillWater(pos, tileNo) && !IsHouse(tileNo))
