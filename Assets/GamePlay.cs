@@ -16,7 +16,7 @@ public class GamePlay : MonoBehaviour
         messagePanel.sizeDelta = new Vector2(Screen.width, Screen.height);
         messagePanel.gameObject.SetActive(false);
         messagePanel.transform.localScale.Scale(new Vector3(Screen.width, Screen.height, 0));
-        textMessage.fontSize = Screen.width/10;
+        textMessage.fontSize = Screen.width/13;
     }
 
     // Update is called once per frame
