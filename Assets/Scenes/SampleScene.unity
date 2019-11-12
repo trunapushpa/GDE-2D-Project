@@ -182,13 +182,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Press ESC to go back...
+  m_Text: Click to go back
 --- !u!222 &138913597
 CanvasRenderer:
   m_ObjectHideFlags: 0

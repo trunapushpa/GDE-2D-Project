@@ -28,7 +28,7 @@ public class GamePlay : MonoBehaviour
             messagePanel.gameObject.SetActive(true);
             textMessage.text = "Game Over!!";
         }
-        if(Input.GetKey(KeyCode.Escape) && isGameOver()) {
+        if((Input.GetKey(KeyCode.Escape) || Input.GetMouseButtonDown(0)) && isGameOver()) {
             CarbonMeter.changeCarbonLevel(0, 0);
             BuildingsMeter.ChangeBuildingsLevel(0, 0);
             SceneManager.LoadScene("start");
